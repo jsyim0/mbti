@@ -10,42 +10,50 @@ const questions = [
 ];
 
 const descriptions = {
-  ISTJ: "실용적이고 책임감이 강한 관리자형. 규칙과 전통을 중시합니다.",
-  ISFJ: "상대의 필요를 잘 돌보는 헌신가. 신중하고 성실합니다.",
-  INFJ: "통찰력 있고 이상을 추구하는 통합자. 깊은 공감을 보입니다.",
-  INTJ: "전략적 계획가. 분석적이며 장기 목표에 집중합니다.",
-  ISTP: "문제 해결 능력이 뛰어난 실용주의자. 손으로 하는 일에 강합니다.",
-  ISFP: "온화하고 자유로운 예술가형. 현재의 순간을 소중히 여깁니다.",
-  INFP: "이상과 가치 중심의 창의적인 중재자. 내면의 일관성을 추구합니다.",
-  INTP: "논리적 분석가. 개념과 이론을 탐구합니다.",
-  ESTP: "행동적 모험가. 문제에 직관적으로 대응합니다.",
-  ESFP: "사교적이며 즐거움을 추구하는 연예인형. 삶을 즐깁니다.",
-  ENFP: "열정적이며 창의적인 촉진자. 사람들의 잠재력을 봅니다.",
-  ENTP: "토론을 즐기는 혁신가. 새로운 가능성을 탐구합니다.",
-  ESTJ: "효율적인 조직자. 규칙과 결과 지향적입니다.",
-  ESFJ: "따뜻한 협력가. 주변 사람을 챙기고 조화롭습니다.",
-  ENFJ: "카리스마 있는 지도자. 타인을 이끄는 능력이 좋습니다.",
-  ENTJ: "결단력 있는 전략가. 목표 달성에 강한 추진력을 가집니다.",
+  ISTJ: { title: "현실적 관리자", desc: "실용적이고 책임감이 강한 타입.", color: "#607D8B", icon: "📘" },
+  ISFJ: { title: "헌신적인 보호자", desc: "타인을 돕는 따뜻한 마음의 소유자.", color: "#81C784", icon: "🫶" },
+  INFJ: { title: "통찰력 있는 조언자", desc: "깊은 이해와 통찰을 가진 이상주의자.", color: "#9575CD", icon: "🧘‍♀️" },
+  INTJ: { title: "전략적 계획가", desc: "논리적이고 목표 지향적인 분석가.", color: "#7E57C2", icon: "♟️" },
+  ISTP: { title: "문제 해결사", desc: "즉각적이고 현실적인 문제 해결에 능함.", color: "#4DB6AC", icon: "🛠️" },
+  ISFP: { title: "예술가", desc: "감성적이고 조용한 자유인.", color: "#F48FB1", icon: "🎨" },
+  INFP: { title: "이상주의자", desc: "자신의 가치에 충실한 창의적 사색가.", color: "#BA68C8", icon: "💫" },
+  INTP: { title: "논리적 사색가", desc: "분석적이고 독창적인 사고를 지님.", color: "#7986CB", icon: "🧩" },
+  ESTP: { title: "모험가", desc: "즉흥적이고 에너지 넘치는 활동가.", color: "#64B5F6", icon: "🏍️" },
+  ESFP: { title: "엔터테이너", desc: "사람들을 즐겁게 하는 사교적 인물.", color: "#FFB74D", icon: "🎤" },
+  ENFP: { title: "열정적인 촉진자", desc: "창의적이고 활기찬 사람 중심형.", color: "#FF8A65", icon: "🔥" },
+  ENTP: { title: "혁신가", desc: "새로운 아이디어를 즐기는 발명가.", color: "#AED581", icon: "💡" },
+  ESTJ: { title: "관리자", desc: "체계적이고 실용적인 조직가.", color: "#90A4AE", icon: "📋" },
+  ESFJ: { title: "친절한 조정자", desc: "사람들을 조화롭게 이끄는 협력가.", color: "#81D4FA", icon: "🤝" },
+  ENFJ: { title: "지도자", desc: "타인을 이끌며 영감을 주는 리더.", color: "#F06292", icon: "🌟" },
+  ENTJ: { title: "지휘관", desc: "결단력과 추진력이 강한 리더.", color: "#FF7043", icon: "🦁" },
 };
 
 let current = 0;
 const answers = {};
-
 const quiz = document.getElementById("quiz");
 const result = document.getElementById("result");
+const intro = document.getElementById("intro");
+const app = document.getElementById("app");
+const startBtn = document.getElementById("startBtn");
+
+startBtn.addEventListener("click", startQuiz);
+
+function startQuiz() {
+  intro.classList.add("hidden");
+  app.classList.remove("hidden");
+  renderQuestion();
+}
 
 function renderQuestion() {
   if (current >= questions.length) {
     showResult();
     return;
   }
-
   const q = questions[current];
+  quiz.classList.add("fade");
   quiz.innerHTML = `
-    <div class="progress">
-      <div class="progress-bar" style="width:${(current / questions.length) * 100}%"></div>
-    </div>
-    <h2>Q${current + 1}. ${q.text}</h2>
+    <div class="progress"><div class="progress-bar" style="width:${(current / questions.length) * 100}%"></div></div>
+    <h2>Q${current + 1}/${questions.length}: ${q.text}</h2>
     <button onclick="answer('${q.a.side}')">${q.a.text}</button>
     <button onclick="answer('${q.b.side}')">${q.b.text}</button>
   `;
@@ -54,7 +62,7 @@ function renderQuestion() {
 function answer(side) {
   answers[questions[current].axis] = (answers[questions[current].axis] || "") + side;
   current++;
-  renderQuestion();
+  setTimeout(renderQuestion, 200);
 }
 
 function calculateType() {
@@ -70,21 +78,24 @@ function calculateType() {
 
 function showResult() {
   const type = calculateType();
+  const data = descriptions[type];
   quiz.classList.add("hidden");
   result.classList.remove("hidden");
+  result.style.backgroundColor = data?.color || "#ccc";
   result.innerHTML = `
-    <h2>당신의 MBTI 유형: ${type}</h2>
-    <p>${descriptions[type] || "유형 설명이 없습니다."}</p>
-    <button onclick="restart()">다시하기</button>
+    <div class="fade" style="padding:20px; border-radius:20px; background:white; color:#333; text-align:center;">
+      <div style="font-size:48px;">${data.icon}</div>
+      <h2>${type} - ${data.title}</h2>
+      <p>${data.desc}</p>
+      <button onclick="restart()">다시하기</button>
+    </div>
   `;
 }
 
 function restart() {
   current = 0;
   for (let key in answers) delete answers[key];
-  quiz.classList.remove("hidden");
   result.classList.add("hidden");
+  quiz.classList.remove("hidden");
   renderQuestion();
 }
-
-renderQuestion();

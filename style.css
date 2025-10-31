@@ -1,49 +1,75 @@
 body {
-  font-family: "Pretendard", sans-serif;
-  background: #f4f6f8;
-  color: #222;
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 30px;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
-.container {
-  background: #fff;
+#intro {
+  text-align: center;
+  animation: fadeIn 1s ease-in;
+}
+.intro-img {
+  width: 80%;
+  max-width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  margin: 20px 0;
+}
+#startBtn {
+  padding: 12px 24px;
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#startBtn:hover {
+  background-color: #574bff;
+}
+.hidden { display: none; }
+#app {
+  width: 90%;
+  max-width: 480px;
+  background: #ffffff;
+  border-radius: 20px;
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  max-width: 600px;
-  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 button {
   display: block;
   width: 100%;
+  padding: 14px;
   margin: 10px 0;
-  padding: 15px;
-  font-size: 16px;
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
   border-radius: 10px;
-  border: 1px solid #ccc;
-  background: #fafafa;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: transform 0.1s, background-color 0.2s;
 }
-button:hover {
-  background: #e8f0ff;
-  border-color: #598eff;
-}
-.hidden { display: none; }
-h1, h2 { text-align: center; }
+button:hover { background-color: #574bff; }
+button:active { transform: scale(0.96); }
 .progress {
-  height: 8px;
-  border-radius: 4px;
-  background: #ddd;
+  background: #eee;
+  border-radius: 10px;
+  height: 10px;
   margin-bottom: 20px;
-  overflow: hidden;
 }
 .progress-bar {
-  height: 100%;
-  background: #598eff;
-  width: 0%;
+  background: #6c63ff;
+  height: 10px;
+  border-radius: 10px;
   transition: width 0.3s;
+}
+.fade { animation: fadeIn 0.6s ease-in; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>간단한 MBTI 테스트</title>
+  <title>감성 MBTI 테스트</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>간단한 MBTI 테스트</h1>
+  <div id="intro">
+    <h1>나의 성격 유형은?</h1>
+    <img src="images/intro.jpg" alt="intro image" class="intro-img" />
+    <button id="startBtn">테스트 시작하기</button>
+  </div>
+
+  <div id="app" class="hidden">
     <div id="quiz"></div>
     <div id="result" class="hidden"></div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
