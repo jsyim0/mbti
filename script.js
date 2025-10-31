@@ -30,18 +30,25 @@ const descriptions = {
 
 let current = 0;
 const answers = {};
+
 const quiz = document.getElementById("quiz");
 const result = document.getElementById("result");
 
 function renderQuestion() {
-  if (current >= questions.length) return showResult();
+  if (current >= questions.length) {
+    showResult();
+    return;
+  }
+
   const q = questions[current];
-  quiz.innerHTML = \`
-    <div class="progress"><div class="progress-bar" style="width:\${(current / questions.length) * 100}%"></div></div>
-    <h2>Q\${current + 1}. \${q.text}</h2>
-    <button onclick="answer('\${q.a.side}')">\${q.a.text}</button>
-    <button onclick="answer('\${q.b.side}')">\${q.b.text}</button>
-  \`;
+  quiz.innerHTML = `
+    <div class="progress">
+      <div class="progress-bar" style="width:${(current / questions.length) * 100}%"></div>
+    </div>
+    <h2>Q${current + 1}. ${q.text}</h2>
+    <button onclick="answer('${q.a.side}')">${q.a.text}</button>
+    <button onclick="answer('${q.b.side}')">${q.b.text}</button>
+  `;
 }
 
 function answer(side) {
@@ -52,11 +59,12 @@ function answer(side) {
 
 function calculateType() {
   const score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-  Object.values(answers).join('').split('').forEach(ch => score[ch]++);
-  const type = (score.E >= score.I ? 'E' : 'I')
-             + (score.S >= score.N ? 'S' : 'N')
-             + (score.T >= score.F ? 'T' : 'F')
-             + (score.J >= score.P ? 'J' : 'P');
+  Object.values(answers).join("").split("").forEach(ch => score[ch]++);
+  const type =
+    (score.E >= score.I ? "E" : "I") +
+    (score.S >= score.N ? "S" : "N") +
+    (score.T >= score.F ? "T" : "F") +
+    (score.J >= score.P ? "J" : "P");
   return type;
 }
 
@@ -64,11 +72,11 @@ function showResult() {
   const type = calculateType();
   quiz.classList.add("hidden");
   result.classList.remove("hidden");
-  result.innerHTML = \`
-    <h2>당신의 MBTI 유형: \${type}</h2>
-    <p>\${descriptions[type] || "유형 설명이 없습니다."}</p>
+  result.innerHTML = `
+    <h2>당신의 MBTI 유형: ${type}</h2>
+    <p>${descriptions[type] || "유형 설명이 없습니다."}</p>
     <button onclick="restart()">다시하기</button>
-  \`;
+  `;
 }
 
 function restart() {
